@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+ 	
+<beans 
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:context="http://www.springframework.org/schema/context"	
+ 	xsi:schemaLocation="
+ 	http://www.springframework.org/schema/mvc 
+ 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd	
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd	
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+  <!-- properties -->	
+  <context:property-placeholder location="/WEB-INF/config/*.properties" /> 
+    
+  <import resource="classpath:root-context.xml"/>
+    	    	
+  <context:annotation-config/>
+  
+  <!-- 컨트롤러 패키지 설정 --> 
+  <context:component-scan base-package="com.twosome.controllers"/>
+  
+  <!-- view 설정 폴더(ViewResolver) -->	
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">	
+	<property name="prefix" value="/WEB-INF/views/"/>	
+	<property name="suffix" value=".jsp"/>	
+  </bean>
+  
+  
+  <!-- @Autowired -->	
+  <bean id="orderDao" class="com.twosome.dao.impl.OrderDaoImpl" />
+  <bean id="orderService" class="com.twosome.services.impl.OrderServiceImpl" />
+  <bean id="orderController" class="com.twosome.controllers.OrderController" />
+  
+  
+</beans>
+

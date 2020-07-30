@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twosome">
+
+ 
+	<!-- 		iBATIS					MyBatis
+	SELECT		SELECT문에 해당하는 결과		SELECT문에 해당하는 결과
+	INSERT		NULL					1(다중 INSERT도 마찬가지)
+	UPDATE		1						UPDATE된 행의 갯수 반환(없으면 0)
+	DELETE		DELETE된 행의 갯수			DELETE된 행의 갯수(없으면 0)
+	-->
+
+
+	<!--  모든 Orders 의 리스트를 읽어 온다 -->
+	<select id="list" resultType="com.twosome.model.Order">
+		SELECT
+			num,		/* DB 에서의 Num 번호 */
+		    item,		/* Order 의 Item 이름 */
+		    price,		/* Order 의 Item 가격 */ 
+		    qty,		/* Order 의 Item 갯수 */
+		    tn			/* Order 의 테이블 번호 */
+		FROM
+			orders
+		WHERE
+			1 = 1
+		ORDER BY NUM ASC
+	</select>
+
+	<select id="getOrder" parameterType="com.twosome.model.Order" resultType="com.twosome.model.Order">
+		SELECT
+			num,		/* DB 에서의 Num 번호 */
+		    item,		/* Order 의 Item 이름 */
+		    price,		/* Order 의 Item 가격 */ 
+		    qty,		/* Order 의 Item 갯수 */
+		    tn			/* Order 의 테이블 번호 */
+		FROM
+			orders
+		WHERE
+			num = #{num}
+	</select>
+
+	<!-- 주문을 추가한다. -->
+	<insert id="newOrder" useGeneratedKeys="true" keyProperty="num" parameterType="com.twosome.model.Order">
+		INSERT 
+		INTO 
+			orders (item, price, qty, tn)
+		VALUES
+			(#{item}, #{price}, #{qty}, #{tn})			 
+	</insert>
+
+	<update id="updateOrder" parameterType="com.twosome.model.Order">
+		UPDATE
+			orders
+		SET
+			item = #{item},
+			price = #{price},
+			qty = #{qty},
+			tn = #{tn}
+		WHERE
+         	num = #{num};
+	</update>
+    
+    <delete id="deleteOrder" parameterType="com.twosome.model.Order">
+        DELETE
+        FROM
+        	orders
+        WHERE
+         	num = #{num}
+    </delete>
+    
+<!--     <update id="reUpdate" parameterType="com.twosome.model.Order">
+		UPDATE
+			orders
+		SET
+			item = #{item},
+			price = #{price},
+			qty = #{qty},
+			tn = #{tn}
+		WHERE
+         	num = #{num};
+	</update> -->
+    
+		
+</mapper>
